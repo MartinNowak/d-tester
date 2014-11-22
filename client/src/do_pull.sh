@@ -7,7 +7,7 @@
 # args:
 #   1) directory to create and use
 #   2) os
-#   3) project (dmd, druntime, phobos)
+#   3) project (dmd, druntime, phobos, dlang.org)
 #   4) git url
 #   5) git ref
 

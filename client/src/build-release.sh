@@ -28,7 +28,7 @@ owner="D-Programming-Language"
 branch="auto-tester-testing"
 
 for platform in ${platforms[@]}; do
-    for repo in "dmd" "druntime" "phobos"; do
+    for repo in "dmd" "druntime" "phobos" "dlang.org"; do
         if [ -d $top/$builddir/$repo ]; then
             rm -r $top/$builddir/$repo
         fi
@@ -38,7 +38,7 @@ for platform in ${platforms[@]}; do
         if [ "$?" -ne 0 ]; then
             abort
         fi
-        src/do_build_$repo.sh "$builddir" "$platform" 
+        src/do_build_$repo.sh "$builddir" "$platform"
         if [ "$?" != 0 ]; then
             abort
         fi

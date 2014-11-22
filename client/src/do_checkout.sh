@@ -46,6 +46,9 @@ fi
 if [ -d $top/source/phobos ]; then
     rm -rf $top/source/phobos
 fi
+if [ -d $top/source/dlang.org ]; then
+    rm -rf $top/source/dlang.org
+fi
 
 # 1 == logfile
 # 2 == owner

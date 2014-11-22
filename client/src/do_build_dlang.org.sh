@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#set -x
+# set -x
 
 # args:
 #    1) directory for build
@@ -12,18 +12,14 @@ if [ -f configs/`hostname` ]; then
     . configs/`hostname`
 fi
 
-echo -e "\tgenerating html"
+echo -e "\tbuilding dlang.org"
 
-cd $1/phobos
-
-DMD=../dmd/src/dmd
-DOC=../web/2.0
-MODEL=32
-
-DD=WEBSITE_DIR
+cd $1/dlang.org
 
 makecmd=make
 makefile=posix.mak
+MODEL=32
+EXTRA_ARGS="-j$PARALLELISM"
 case "$2" in
     Darwin_32|Darwin_64_32)
         ;;
@@ -43,25 +39,24 @@ case "$2" in
         MODEL=64
         ;;
     stub)
+        exit 0
         ;;
     Win_32)
-        DR=DRUNTIME
         makefile=win32.mak
-        DD=DOC
+        EXTRA_ARGS=""
         ;;
     Win_64)
-        DR=DRUNTIME
         makefile=win64.mak
-        DD=DOC
+        EXTRA_ARGS=""
+        MODEL=64
         ;;
     *)
         echo "unknown os: $2"
         exit 1
 esac
 
-$makecmd DDOC=$DMD $DD=$DOC DMD=$DMD MODEL=$MODEL -f $makefile html >> ../phobos-html.log 2>&1
+$makecmd DMD=../dmd/src/dmd MODEL=$MODEL $EXTRA_ARGS -f $makefile >> ../dlang.org-build.log 2>&1
 if [ $? -ne 0 ]; then
-    echo -e "\tphobos html generation failed"
+    echo -e "\tdlang.org failed to build"
     exit 1
 fi
-
